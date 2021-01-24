@@ -1,0 +1,26 @@
+ALGORITHM three_nb_add
+VAR
+   _Length,Num_word,Num_Vowel:INTEGER:=0; // declaration of the 3 variables 
+   Sentence:STRING:=""; // declaration of the variable sentence
+BEGIN
+   character = write("write a character"); // write the first character
+// a while loop the form the sentence and stop when typing dot (.)
+WHILE (character<>".") DO
+// an If statement to count the number of vowels writen
+    IF (character ="A" OR character ="E" OR character="I" OR character="O" OR character="U" OR character="Y" ) THEN
+        Num_Vowel=Num_Vowel+1
+    END_IF
+// an If statement to count the number of words in the sentence 
+    IF (character =" ") THEN
+        Num_word=Num_word+1
+    END_IF
+    _Length=_Length+1;
+    sentence=character+sentence;
+    character=write("write a character") ;
+END_WHILE
+// writing th result 
+   write(sentence);
+   write(_Length+1);
+   write(Num_word+1);
+   write(Num_Vowel);
+END
