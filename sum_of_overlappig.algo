@@ -1,0 +1,45 @@
+ALGORITHM sum_of_overlapping
+VAR
+Set1 : ARRAY_OF INTEGER[8];
+Set2 : ARRAY_OF INTEGER[12];
+a,sum:INTEGER:=0;
+count:INTEGER:=1;
+htab:HASH_TABLE<INTEGER,INTEGER>;
+BEGIN
+FOR i FROM 0 TO 7  DO
+    Read(Set1[i]); //Insert from user
+END_FOR
+FOR i FROM 0 TO 11  DO
+    Read(Set2[i]); //Insert from user
+END_FOR
+
+// First method using Array structure => =>
+//adding overlapping elements in the set1
+    FOR i FROM 0 TO 7 DO
+    FOR j FROM 0 TO 11 DO
+        IF(Set1[i]=Set2[j]) THEN
+        sum=sum+Set1[i];
+        END_IF
+    END_FOR
+    END_FOR
+write(2*sum);
+
+//Second Method Using a hash table => =>
+//adding overlapping elements in the set1
+FOR i FROM 0 TO 7 DO
+    FOR j FROM 0 TO 11  DO
+        IF(Set2[j]=Set1[i])THEN
+        count:=htab.get(Set1[i]);
+        htab.insert(Set1[i],count+1);
+        ELSE
+        htab.insert(Set1[i],1);
+        END_IF
+    END_FOR
+END_FOR
+FOR i FROM 0 TO 7 DO
+    IF (htab.get(Set1[i])>1) THEN
+        sum=sum+Set1[i];
+    END_IF
+END_FOR
+write(2*sum);
+END

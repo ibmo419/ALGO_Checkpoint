@@ -1,0 +1,77 @@
+ALGORITHM sum_of_non_similar
+VAR
+Set1 : ARRAY_OF INTEGER[8];
+Set2 : ARRAY_OF INTEGER[12];
+a,sum:INTEGER:=0;
+count:INTEGER:=1;
+htab:HASH_TABLE<INTEGER,INTEGER>;
+BEGIN
+FOR i FROM 0 TO 7  DO
+    Read(Set1[i]); //Insert from user
+END_FOR
+FOR i FROM 0 TO 11  DO
+    Read(Set2[i]); //Insert from user
+END_FOR
+
+// First method using Array structure => =>
+//adding unique elements in the set2
+    FOR j FROM 0 TO 11 DO
+    a:=0;
+    FOR i FROM 0 TO 7 DO
+        IF(Set2[j]<>Set1[i]) THEN
+        a=a+1;
+        END_IF
+    END_FOR
+    IF (a=8) THEN
+        sum=sum+Set2[j];
+    END_IF
+    END_FOR
+//adding unique elements in the set1
+    FOR i FROM 0 TO 7 DO
+    a:=0;
+    FOR j FROM 0 TO 11 DO
+        IF(Set2[j]<>Set1[i]) THEN
+        a=a+1;
+        END_IF
+    END_FOR
+    IF (a=8) THEN
+        sum=sum+Set1[j];
+    END_IF
+    END_FOR
+write(sum);
+
+//Second Method Using a hash table => =>
+//adding unique elements in the set2
+FOR j FROM 0 TO 11 DO
+    FOR i FROM 0 TO 7  DO
+        IF(Set2[j]=Set1[i])THEN
+        count:=htab.get(Set2[j]);
+        htab.insert(Set2[j],count+1);
+        ELSE
+        htab.insert(Set2[j],1);
+        END_IF
+    END_FOR
+END_FOR
+FOR j FROM 0 TO 11 DO
+    IF (htab.get(Set2[j])=1) THEN
+        sum=sum+Set2[j];
+    END_IF
+END_FOR
+//adding unique elements in the set1
+FOR i FROM 0 TO 7 DO
+    FOR j FROM 0 TO 11  DO
+        IF(Set2[j]=Set1[i])THEN
+        count:=htab.get(Set1[i]);
+        htab.insert(Set1[i],count+1);
+        ELSE
+        htab.insert(Set1[i],1);
+        END_IF
+    END_FOR
+END_FOR
+FOR i FROM 0 TO 7 DO
+    IF (htab.get(Set1[i])=1) THEN
+        sum=sum+Set1[i];
+    END_IF
+END_FOR
+write(sum);
+END
